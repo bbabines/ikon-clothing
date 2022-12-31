@@ -1,44 +1,49 @@
-import { useState } from "react";
-import { Form } from "react-router-dom";
+import { useState, useContext } from "react";
+
+import FormInput from "../Form-input/Form-input.component";
+import Button from "../Button/Button.component";
+import { UserContext } from "../contexts/user.context";
+
 import {
 	createAuthUserWithEmailAndPassword,
 	createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
 
-import FormInput from "../Form-input/Form-input.component";
 import "./sign-up-form.styles.scss";
-import Button from "../Button/Button.component";
+
+const defaultFormFields = {
+	displayName: "",
+	email: "",
+	password: "",
+	confirmPassword: "",
+};
 
 const SignUpForm = () => {
-	const defaultFormFields = {
-		displayName: "",
-		email: "",
-		password: "",
-		confirmPassword: "",
-	};
+	const [formFields, setFormFields] = useState(defaultFormFields);
+	const { displayName, email, password, confirmPassword } = formFields;
+	const { setCurrentUser } = useContext(UserContext);
 
 	const resetFormFields = () => {
 		setFormFields(defaultFormFields);
 	};
 
-	const [formFields, setFormFields] = useState(defaultFormFields);
-
-	const { displayName, email, password, confirmPassword } = formFields;
-
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		// Make sure passwords match
 		if (password != confirmPassword) {
 			alert("passwords do not match");
 			return;
 		}
-		// Make sure the person is authenticated
+
 		try {
-			const user = await createAuthUserWithEmailAndPassword(email, password);
+			const { user } = await createAuthUserWithEmailAndPassword(
+				email,
+				password
+			);
 
 			await createUserDocumentFromAuth(user, { displayName });
 			resetFormFields();
+			setCurrentUser(user);
 		} catch (error) {
 			if (error.code === "auth/email-already-in-use") {
 				alert("Cannot create user, email already in use");
@@ -50,6 +55,7 @@ const SignUpForm = () => {
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
+
 		setFormFields({ ...formFields, [name]: value });
 	};
 
@@ -93,7 +99,6 @@ const SignUpForm = () => {
 					name="confirmPassword"
 					value={confirmPassword}
 				/>
-
 				<Button type="submit">Sign Up</Button>
 			</form>
 		</div>

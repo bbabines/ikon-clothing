@@ -10,15 +10,16 @@ import {
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyBjZm0l0oSnPWs7mRYOJS3WaCK5MvtCpOI",
-	authDomain: "crwn-clothing-db-a9337.firebaseapp.com",
-	projectId: "crwn-clothing-db-a9337",
-	storageBucket: "crwn-clothing-db-a9337.appspot.com",
-	messagingSenderId: "946195811801",
-	appId: "1:946195811801:web:2f6c10a9301bc5f8de1dc8",
+	apiKey: "AIzaSyDDU4V-_QV3M8GyhC9SVieRTDM4dbiT0Yk",
+	authDomain: "crwn-clothing-db-98d4d.firebaseapp.com",
+	projectId: "crwn-clothing-db-98d4d",
+	storageBucket: "crwn-clothing-db-98d4d.appspot.com",
+	messagingSenderId: "626766232035",
+	appId: "1:626766232035:web:506621582dab103a4d08d6",
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
+
 const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
@@ -29,7 +30,7 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () =>
 	signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () =>
-	signInWithGoogleRedirect(auth, googleProvider);
+	signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
 
@@ -41,9 +42,9 @@ export const createUserDocumentFromAuth = async (
 
 	const userDocRef = doc(db, "users", userAuth.uid);
 
-	const userSnapShop = await getDoc(userDocRef);
+	const userSnapshot = await getDoc(userDocRef);
 
-	if (!userSnapShop.exists()) {
+	if (!userSnapshot.exists()) {
 		const { displayName, email } = userAuth;
 		const createdAt = new Date();
 
@@ -58,17 +59,20 @@ export const createUserDocumentFromAuth = async (
 			console.log("error creating the user", error.message);
 		}
 	}
+
 	return userDocRef;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
 	if (!email || !password) return;
 
-	return await createAuthUserWithEmailAndPassword(auth, email, password);
+	return await createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 	if (!email || !password) return;
 
-	return await signInAuthUserWithEmailAndPassword(auth, email, password);
+	return await signInWithEmailAndPassword(auth, email, password);
 };
+
+// export const signOutUser = async () => await signOut(auth);
