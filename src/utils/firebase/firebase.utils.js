@@ -9,15 +9,22 @@ import {
 	signOut,
 	onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+	getFirestore,
+	doc,
+	getDoc,
+	setDoc,
+	collection,
+	writeBatch,
+} from "firebase/firestore";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyDDU4V-_QV3M8GyhC9SVieRTDM4dbiT0Yk",
-	authDomain: "crwn-clothing-db-98d4d.firebaseapp.com",
-	projectId: "crwn-clothing-db-98d4d",
-	storageBucket: "crwn-clothing-db-98d4d.appspot.com",
-	messagingSenderId: "626766232035",
-	appId: "1:626766232035:web:506621582dab103a4d08d6",
+	apiKey: "AIzaSyBjZm0l0oSnPWs7mRYOJS3WaCK5MvtCpOI",
+	authDomain: "crwn-clothing-db-a9337.firebaseapp.com",
+	projectId: "crwn-clothing-db-a9337",
+	storageBucket: "crwn-clothing-db-a9337.appspot.com",
+	messagingSenderId: "946195811801",
+	appId: "1:946195811801:web:2f6c10a9301bc5f8de1dc8",
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -35,6 +42,22 @@ export const signInWithGoogleRedirect = () =>
 	signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (
+	collectionKey,
+	objectsToAdd
+) => {
+	const collectionRef = collection(db, collectionKey);
+	const batch = writeBatch(db);
+
+	objectsToAdd.forEach((object) => {
+		const docRef = doc(collectionRef, object.title.toLowerCase());
+		batch.set(docRef, object);
+	});
+
+	await batch.commit();
+	console.log("done");
+};
 
 export const createUserDocumentFromAuth = async (
 	userAuth,
