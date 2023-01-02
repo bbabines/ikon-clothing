@@ -26,10 +26,10 @@ export const Body = styled.div`
 		font-size: 22px;
 		color: #4a4a4a;
 		text-transform: uppercase;
+		font-family: Georgia, "Times New Roman", Times, serif;
 	}
 
 	p {
-		font-weight: lighter;
 		font-size: 16px;
 	}
 `;

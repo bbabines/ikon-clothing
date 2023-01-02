@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { redirect } from "react-router-dom";
 
 import { CartContext } from "../contexts/cart.context";
 
@@ -16,7 +17,7 @@ const CartIcon = () => {
 	};
 
 	return (
-		<CartIconContainer onClick={toggleIsCartOpen}>
+		<CartIconContainer className="cart-id" onClick={toggleIsCartOpen}>
 			<ShoppingIcon className="shopping-icon" />
 			<ItemCount>{cartCount}</ItemCount>
 		</CartIconContainer>

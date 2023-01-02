@@ -15,6 +15,7 @@ import {
 	LogoContainer,
 	NavLinks,
 	NavLink,
+	NavTitle,
 } from "./navigation.styles.js";
 
 const Navigation = () => {
@@ -25,8 +26,9 @@ const Navigation = () => {
 		<Fragment>
 			<NavigationContainer>
 				<LogoContainer to="/">
-					<CrwnLogo className="logo" />
+					<CrwnLogo />
 				</LogoContainer>
+				<NavTitle to="/">BRADZ CLOTHING</NavTitle>
 				<NavLinks>
 					<NavLink to="/shop">SHOP</NavLink>
 
