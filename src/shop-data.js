@@ -1,3 +1,5 @@
+// Using Firebase now instead of hardcoded data.
+
 // const SHOP_DATA = [
 // 	{
 // 		title: "Hats",
