@@ -57,6 +57,9 @@ export const CartProvider = ({ children }) => {
 	const [cartItems, setCartItems] = useState([]);
 	const [cartCount, setCartCount] = useState(0);
 	const [cartTotal, setCartTotal] = useState(0);
+	const emptyCart = () => {
+		setCartItems([]);
+	};
 
 	// Cart count useEffect
 	useEffect(() => {
@@ -97,6 +100,7 @@ export const CartProvider = ({ children }) => {
 		cartItems,
 		cartCount,
 		cartTotal,
+		emptyCart,
 	};
 
 	return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

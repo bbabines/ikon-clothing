@@ -21,6 +21,8 @@ const CartDropdown = () => {
 		navigate("/checkout");
 	};
 
+	// Needs further work to implement an indication (onChange) a cart item was added.
+
 	return (
 		<CartDropDownContainer>
 			<CartItems>

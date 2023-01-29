@@ -1,13 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { CartContext } from "../../components/contexts/cart.context";
 
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 
 import "./checkout.styles.scss";
+import Button from "../../components/Button/Button.component";
 
 const Checkout = () => {
-	const { cartItems, cartTotal } = useContext(CartContext);
+	const { cartItems, emptyCart, cartTotal } = useContext(CartContext);
+	const [orderButton, setOrderButton] = useState("Submit Order");
+
+	const checkOutHandler = () => {
+		setOrderButton("Ordering...");
+		setTimeout(() => {
+			alert("Order Submitted!");
+			emptyCart();
+			setOrderButton("Submit Order");
+		}, 2000);
+	};
 
 	return (
 		<div className="checkout-container">
@@ -36,6 +47,10 @@ const Checkout = () => {
 				return <CheckoutItem key={cartItem.id} cartItem={cartItem} />;
 			})}
 			<span className="total">Total: ${cartTotal}</span>
+
+			<Button onClick={checkOutHandler} type="submit">
+				{orderButton}
+			</Button>
 		</div>
 	);
 };
